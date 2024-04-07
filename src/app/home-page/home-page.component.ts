@@ -5,9 +5,11 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-    <p>
-      Aqui vai ficar a página home.
-    </p>
+    <h1> HOMEPAGE! </h1>
+    <div>
+      <label for="cpf">Id</label>
+      <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" required>
+    </div>
   `,
   styleUrl: './home-page.component.css'
 })
