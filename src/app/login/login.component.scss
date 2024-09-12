@@ -1,141 +1,38 @@
-// Dimensions
-$prism-height: 350px;
-$prism-length: 300px;
-$spacing: 20px;
-$br: 3px;
-
-// Colors
-$text-light: #272a5a;
-$white: #f7feff;
-$smoke: #f9f9fa;
-$coral: #ff5751;
-$navy-blue: #42509e;
-$green: #656f54;
-
-//Cores
-
-
-
-
-*{
-  box-sizing: border-box;
+body {
+  background-color: #002B48;
+  display: flex;
+  height: 100vh;
+  margin: 0;
+  color: #ECF3F9;
+  justify-content: center;
+  align-items: center;
 }
 
-body{
-  font-family: Tahoma,Verdana,Segoe,sans-serif; 
-  font-size: 14px;
-  background: #002b48;
+.title{
+  height: 0vh !important;
+}
+
+.login-container {
+  max-width: 400px;
+  width: 100%;
+}
+
+.app-title {
   text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 6rem;
 }
 
-
-
-.face {
-  top: 250px;
-  left: 45px;
-  position: absolute;
-  width: $prism-length;
-  height: $prism-height;
-  padding: $spacing;
-  background: #001220;
-  border: 3px solid $green;
-  border-radius: 3px;
-  
-  .content{
-    color: $white;
-    h2{
-      font-size: 1.2em;
-      color: $white;
-    }
-    .field-wrapper{
-      margin-top: $spacing*1.5;
-      position: relative;
-
-      label{
-        position: absolute;
-        pointer-events: none;
-        font-size: 0.85em;
-        top: 40%;
-        left: 0;
-        transform: translateY(-50%);
-        transition: all ease-in 0.25s;
-        color: lighten($white, 20%);
-      }
-      input[type="text"], input[type="password"], input[type="submit"], textarea{
-        -webkit-appearance: none;
-        appearance: none;
-        &:focus{
-          outline: none;
-        }
-      }
-      input[type="text"], input[type="password"], textarea{
-        width: 100%;
-        border: none;
-        background: transparent;
-        line-height: 2em;
-        border-bottom: 1px solid $green;
-        color: $white;
-
-        &::-webkit-input-placeholder{
-          opacity: 0;
-        }
-        &::-moz-placeholder{
-          opacity: 0;
-        }
-        &:-ms-input-placeholder{
-          opacity: 0;
-        }
-        &:-moz-placeholder { 
-          opacity: 0;
-        }
-        &:focus, &:not(:placeholder-shown){
-          + label{
-            top: -35%;
-            color: $navy-blue;
-          }
-        }
-      }
-      input[type="submit"]{
-        -webkit-appearance: none;
-        appearance: none;
-        cursor: pointer;
-        width: 100%;
-        background: #0765a3;
-        line-height: 2em;
-        color: #00081e;
-        border: 1px solid #0765a3;
-        border-radius: $br;
-        padding: $spacing/4;
-        
-        &:hover{
-          opacity: 0.9;
-        }
-        &:active{
-          transform: scale(0.96);
-        }
-      }
-      textarea{
-        resize: none;
-        line-height: 1em;
-        &:focus, &:not(:placeholder-shown){
-          + label{
-            top: -25%;
-          }
-        }
-      }
-    }
-  }
+.login-card {
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  background-color: #001220;
+  color: #ECF3F9;
 }
 
-.psw, .signup, .singin{
-  display: block;
-  margin: $spacing 0;
-  font-size: 0.75em;
-  text-align: center;
-  color: $white;
-  cursor: pointer;
+.register-btn{
+  margin-top: 1rem;;
 }
 
-small{
-  font-size: 0.7em;
-}

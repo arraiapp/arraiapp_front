@@ -1,0 +1,38 @@
+body {
+    background-color: #002B48;
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    color: #ECF3F9;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .title{
+    height: 0vh !important;
+  }
+  
+  .login-container {
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .app-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2.5rem;
+  }
+  
+  .register-card {
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: #001220;
+    color: #ECF3F9;
+  }
+  .login-btn{
+    margin-top: 1rem;;
+  }
+  
+  

@@ -1,75 +1,79 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormGroupDirective, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { LoginService } from './login.service';
-import { Logins } from './login-interface';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule],
   template: `
-    <body>
-      <section class="face face-front">
-        <div class="content">
-          <h2>Login</h2>
-          <form>
-            <div class="field-wrapper">
-              <input
-                type="text"
-                name="username"
-                placeholder="username"
-                [(ngModel)]="cpf"
-              />
-              <label>Usuário</label>
-            </div>
-            <div class="field-wrapper">
-              <input
-                type="password"
-                name="password"
-                placeholder="password"
-                autocomplete="new-password"
-                [(ngModel)]="senha"
-              />
-              <label>Senha</label>
-            </div>
-            <div class="field-wrapper">
-              <!-- >Quando clicado pega o que está dentro de usuário e passa como parâmtro para a função triggerLogin< -->
-              <input type="submit" (click)="validaLogin()" />
-            </div>
-            <span class="psw" routerLink="reset-password"
-              >Esqueceu a Senha?
-            </span>
-            <span class="signup" routerLink="register"
-              >Ainda possui? Cadastre-se!</span
-            >
-          </form>
+   <body>
+   <div class="login-container">
+        <div class="mb-4">
+            <h1 class="app-title">ARRAIAPP</h1>
         </div>
-      </section>
-    </body>
+        <div class="card login-card">
+            <div class="card-body">
+                <h5 class="card-title text-center">Login</h5>
+                <form [formGroup]="form" #signupForm="ngForm" (ngSubmit)="submit(signupForm)">
+                    <div class="mb-3">
+                        <label class="form-label">CPF</label>
+                        <input type="text" class="form-control" formControlName="cpf" placeholder="Digite seu CPF">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Senha</label>
+                        <input type="password" class="form-control" formControlName="password" placeholder="Digite sua senha">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 login-btn">Entrar</button>
+                </form>
+                <!-- Caso precise debugar os valores usa isso <pre>{{ form.value | json}}</pre> -->
+                <!-- Caso precise debugar a validação cpf usa isso: <div>CPF Valid: {{cpf?.valid}} </div> -->
+                
+                <!-- Caso precise debugar a validação senha usa isso:<div>Form Submmited: {{signupForm?.submitted}} </div> -->
+
+                <button type="submit" class="btn btn-primary w-100 register-btn " routerLink="register">Cadastrar-se</button>
+            </div>
+        </div>
+    </div>
+</body>
   `,
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  cpf: string = '';
-  senha: string = '';
+
+  form: FormGroup = new FormGroup({
+    cpf : new FormControl('', 
+      [ Validators.required, Validators.minLength(11) ]
+    ),
+    password: new FormControl('', Validators.required)
+  });
+
+
+  get cpf() {return this.form.get("cpf")}
+  get password() {return this.form.get("password")}
 
   constructor(
     private loginService: LoginService,
-    private router: Router
   ) {}
 
-  validaLogin() {
-    this.loginService.login(this.cpf, this.senha).subscribe({
-      next: (vl : Logins) => {
-        if (vl?.cpf != null) {
-          this.router.navigate(['/home-page', vl.id]);
-        }else{ 
-          alert("Ocorreu um erro!");
-        } 
-      },
-     error: err=> alert("Erro interno do sistema, favor comunicar ao administrador!")});
+  submit(form: FormGroupDirective){
+    console.log(form.value)
+    if (form.valid){
+      this.loginService
+      .login(form.value)
+      .subscribe({
+        next: (response: any) => {
+          if (response) {
+            alert('Logou com sucesso!');
+          }
+        },
+        error: (err) => console.log(err),
+      });
+    }
   }
+
 }
+
 
