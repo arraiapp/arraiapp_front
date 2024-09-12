@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule,FormBuilder,Validators } from '@angular/forms';
 
 //Component principal que carrega o router dentro de sua estrutruta, que por sua vez tem as rotas 
 //de todas as paginas
