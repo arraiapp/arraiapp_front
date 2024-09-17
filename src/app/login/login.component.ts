@@ -3,6 +3,8 @@ import { FormControl, FormGroup, FormGroupDirective, FormsModule, ReactiveFormsM
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { LoginService } from './login.service';
+import { Logins } from './login-interface';
+import { HomePageService } from '../home-page/home-page.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +28,7 @@ import { LoginService } from './login.service';
                         <label class="form-label">Senha</label>
                         <input type="password" class="form-control" formControlName="password" placeholder="Digite sua senha">
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 login-btn">Entrar</button>
+                    <button type="submit" [routerLink]="loginLink" class="btn btn-primary w-100 login-btn">Entrar</button>
                 </form>
                 <!-- Caso precise debugar os valores usa isso <pre>{{ form.value | json}}</pre> -->
                 <!-- Caso precise debugar a validação cpf usa isso: <div>CPF Valid: {{cpf?.valid}} </div> -->
@@ -43,6 +45,8 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent {
 
+  loginLink: string = '';
+
   form: FormGroup = new FormGroup({
     cpf : new FormControl('', 
       [ Validators.required, Validators.minLength(11) ]
@@ -56,6 +60,7 @@ export class LoginComponent {
 
   constructor(
     private loginService: LoginService,
+    private homePageService: HomePageService
   ) {}
 
   submit(form: FormGroupDirective){
@@ -63,9 +68,10 @@ export class LoginComponent {
       this.loginService
       .login(form.value)
       .subscribe({
-        next: (response: any) => {
+        next: (response: Logins) => {
           if (response) {
-            alert('Logou com sucesso!');
+            this.homePageService.setUserData(JSON.parse(JSON.stringify(response)));
+            this.loginLink = "home-page";
           }
         },
         error: (err) => console.log(err),
