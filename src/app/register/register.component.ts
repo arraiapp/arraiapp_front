@@ -3,6 +3,7 @@ import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormGroupDirective, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterService } from './register.service';
+import { Registers } from './register-interface';
 
 @Component({
   selector: 'app-register',
@@ -73,7 +74,7 @@ export class RegisterComponent {
           this.registerService
           .register(form.value)
           .subscribe({
-            next: (response: any) => {
+            next: (response: Registers) => {
             if (response) {
                 alert('Cadastrado com sucesso!');
               }

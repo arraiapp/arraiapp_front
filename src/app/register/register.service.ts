@@ -9,8 +9,18 @@ import { Registers } from './register-interface';
 })
 export class RegisterService {
 
+  private userData: Registers | undefined;
+
   //Passa o endereço da nossa Api (Tem que colocar isso em um arquivo depois, ta paia assim.)
   private apiUrl: string = "http://localhost:8080"
+
+  setUserData(data: Registers) {
+    this.userData = data;
+  }
+
+  getUserData(): Registers | undefined {
+    return this.userData;
+  }
 
   constructor(private http: HttpClient, private params: HttpParams) { 
     this.apiUrl
