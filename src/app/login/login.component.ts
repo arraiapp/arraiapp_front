@@ -59,7 +59,6 @@ export class LoginComponent {
   ) {}
 
   submit(form: FormGroupDirective){
-    console.log(form.value)
     if (form.valid){
       this.loginService
       .login(form.value)
