@@ -16,7 +16,6 @@ import { FormsModule,FormBuilder,Validators } from '@angular/forms';
     </body>
   </main>
   `,
-  styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'frontEnd';

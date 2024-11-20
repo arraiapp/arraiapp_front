@@ -28,7 +28,7 @@ import { HomePageService } from '../home-page/home-page.service';
                         <label class="form-label">Senha</label>
                         <input type="password" class="form-control" formControlName="password" placeholder="Digite sua senha">
                     </div>
-                    <button type="submit" [routerLink]="loginLink" class="btn btn-primary w-100 login-btn">Entrar</button>
+                    <button type="submit" class="btn btn-primary w-100 login-btn">Entrar</button>
                 </form>
                 <!-- Caso precise debugar os valores usa isso <pre>{{ form.value | json}}</pre> -->
                 <!-- Caso precise debugar a validação cpf usa isso: <div>CPF Valid: {{cpf?.valid}} </div> -->
@@ -60,7 +60,8 @@ export class LoginComponent {
 
   constructor(
     private loginService: LoginService,
-    private homePageService: HomePageService
+    private homePageService: HomePageService,
+    private router : Router
   ) {}
 
   submit(form: FormGroupDirective){
@@ -70,14 +71,16 @@ export class LoginComponent {
       .subscribe({
         next: (response: Logins) => {
           if (response) {
+            this.router.navigate(["/home-page"]);
             this.homePageService.setUserData(JSON.parse(JSON.stringify(response)));
-            this.loginLink = "home-page";
           }
         },
         error: (err) => console.log(err),
       });
     }
   }
+
+  
 
 }
 
