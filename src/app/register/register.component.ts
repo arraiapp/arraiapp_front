@@ -28,6 +28,10 @@ import { Registers } from './register-interface';
                         <input type="email" class="form-control" formControlName="email" placeholder="Digite seu e-mail" required>
                     </div>
                     <div class="mb-3">
+                        <label for="phone" class="form-label">Telefone</label>
+                        <input type="text" class="form-control" formControlName="phone" placeholder="Digite seu telefone" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="cpf" class="form-label">CPF</label>
                         <input type="text" class="form-control" formControlName="cpf" placeholder="Digite seu CPF" required>
                     </div>
@@ -52,6 +56,7 @@ export class RegisterComponent {
     form: FormGroup = new FormGroup({
         name: new FormControl('', Validators.required),
         email: new FormControl('', Validators.required),
+        phone: new FormControl('', Validators.required),
         cpf : new FormControl('', 
             [ Validators.required, Validators.minLength(11) ]
           ),
@@ -60,6 +65,7 @@ export class RegisterComponent {
     
     get name() {return this.form.get("name")}
     get email() {return this.form.get("email")}
+    get phone() {return this.form.get("phone")}
     get cpf() {return this.form.get("cpf")}
     get password() {return this.form.get("password")}
     

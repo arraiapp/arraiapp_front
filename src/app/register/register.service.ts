@@ -12,7 +12,7 @@ export class RegisterService {
   private userData: Registers | undefined;
 
   //Passa o endereço da nossa Api (Tem que colocar isso em um arquivo depois, ta paia assim.)
-  private apiUrl: string = "http://localhost:8080"
+  private apiUrl: string = "http://ec2-3-86-32-26.compute-1.amazonaws.com:8080"
 
   setUserData(data: Registers) {
     this.userData = data;
@@ -28,6 +28,7 @@ export class RegisterService {
 
     // Chama o método de registrar da nossa API, recebendo como parametro o json de todos os dados necessários.
     register(register: Registers): Observable<any> {
+      console.log()
       return this.http.post(`${this.apiUrl}/api/customer/register`, register);
     }
 

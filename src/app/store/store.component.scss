@@ -1,0 +1,70 @@
+/* Cor de fundo suave para combinar com o fundo branco */
+.ficha-card {
+    background-color: #e0f7fa; /* Azul suave */
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  /* Efeito hover para interação */
+  .ficha-card:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Estilo do conteúdo: descrição e valor lado a lado */
+  .ficha-card .card-body {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Estilo para os textos */
+  .ficha-card .card-title {
+    font-size: 1rem;
+    color: #333;
+    flex-grow: 1;
+    margin-right: 8px;
+  }
+  
+  .ficha-card .card-text {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* Ajustes de layout para telas pequenas */
+  @media (max-width: 576px) {
+    .col-12 {
+      max-width: 100%;
+      flex: 0 0 100%;
+    }
+  
+    /* Tamanho do texto e espaçamento ajustados para mobile */
+    .ficha-card {
+      padding: 12px;
+    }
+  
+    .ficha-card .card-title {
+      font-size: 0.9rem;
+    }
+  
+    .ficha-card .card-text {
+      font-size: 0.9rem;
+    }
+
+    .return{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      margin-bottom: 20px; /* Ajuste conforme necessário */
+      font-size: 1.5rem; 
+    }
+
+    input {
+      width: 60px;
+    }
+  }

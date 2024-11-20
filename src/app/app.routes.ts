@@ -6,6 +6,9 @@ import { LoginComponent } from './login/login.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { StoreComponent } from './store/store.component';
+import { WalletComponent } from './wallet/wallet.component';
+import { ReceiptComponent } from './receipt/receipt.component';
 
 // Definindo contante com as lista das rotas
 // path : Nome da página que fica na URL
@@ -30,6 +33,21 @@ const routeConfig: Routes = [
         path: 'reset-password',
         component: ResetPasswordComponent,
         title: 'Reset Password Page'
+    },    
+    {
+        path: 'store',
+        component: StoreComponent,
+        title: 'Store Page'
+    },
+    {
+        path: 'wallet',
+        component: WalletComponent,
+        title: 'Wallet Page'
+    },
+    {
+        path: 'receipt',
+        component: ReceiptComponent,
+        title: 'Receipt Page'
     }
 ];
 
