@@ -14,7 +14,7 @@ import { Router, RouterModule } from '@angular/router';
         <div class="container mb-3 header">
           <div class="row">
             <div class="col-5 offset-1 title">
-              <h3>ArraiApp</h3>
+              <h3>ArraiAPP</h3>
             </div>
           </div>
         </div>

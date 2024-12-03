@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Ticket, Tickets } from './ticket';
-import { Register } from '../register/register-interface';
+import { Tickets } from './ticket';
 import { Checkout } from './checkout';
 
 @Injectable({

@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { Tickets } from '../store/ticket';
+import { CommonModule } from '@angular/common';
+import { Register } from '../register/register-interface';
 
 @Component({
   selector: 'app-receipt',
   standalone: true,
-  imports: [RouterLink],
+  imports: [CommonModule],
   template: `
   <div class="container mt-4">
     <div class="header">
@@ -13,34 +16,43 @@ import { RouterLink } from '@angular/router';
     
     <!-- Data e Hora -->
     <div class="date-time text-center mb-3">
-      <span>Data e Hora: 07/11/2024 14:35</span>
+      <span>Data e Hora: {{ currentDateTime }}</span>
     </div>
 
-    <!-- Itens Consumidos -->
-    <div class="item">
-      <div>Cachorro Quente (2x)</div>
-      <div>R$ 12,00</div>
-    </div>
-    <div class="item">
-      <div>Refrigerante Guaraná (2x)</div>
-      <div>R$ 8,00</div>
-    </div>
+    @for (ticket of userTickets; track $index) {
+      <div class="item">
+        <div>{{ ticket.description }} X{{ ticket.quantity }}</div>
+        <div>{{ (ticket.value) * (ticket.quantity ?? 1)| currency: 'BRL' : 'symbol' : '1.2-2' }}</div>
+      </div>
+    }
 
-    <!-- Total -->
-    <div class="item total">
-      <div>Total</div>
-      <div>R$ 20,00</div>
-    </div>
-  </div>
-
-  <!-- Botão Fechar Comprovante no rodapé -->
   <div class="footer">
-    <button class="btn btn-primary w-100" routerLink="../wallet">Fechar Comprovante</button>
+    <button class="btn btn-primary w-100" (click)="navegateWallet()">Fechar Comprovante</button>
   </div>
 
   `,
   styleUrl: './receipt.component.scss'
 })
-export class ReceiptComponent {
+export class ReceiptComponent implements OnInit{
+
+  userData: Register | undefined;
+  userTickets: Tickets[] = [];
+  currentDateTime: string;
+
+  ngOnInit(): void {
+    // Recupera os dados do usuário
+    this.userTickets = history.state.userTickets;
+    this.userData = history.state.userData;
+  }
+
+  constructor(
+    private router : Router,
+  ){
+    this.currentDateTime = new Date().toLocaleString(); 
+  }
+
+  navegateWallet(){
+      this.router.navigate(["/wallet"], { state: { userData: this.userData } });
+  }
 
 }
