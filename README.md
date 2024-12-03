@@ -12,6 +12,10 @@ Esse reposítorio se refere a parte do cliente, onde o mesmo pode adquir fichas 
 
 📌 [Link da documentação completa](https://example.com)
 
+📌 [Link do frontend da página do administrador](https://example.com)
+
+📌 [Link do backend da aplicação](https://example.com)
+
 ## 🚀 Como rodar a aplicação
 
 ```bash
