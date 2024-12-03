@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { OnInit } from '@angular/core';
+import { Tickets } from '../store/ticket';
+import { WalletService } from './wallet.service';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Checkout } from '../store/checkout';
 
 @Component({
   selector: 'app-wallet',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, FormsModule, ReactiveFormsModule],
   template: `
     <div class="container d-flex flex-column">
     <div class="header">
@@ -13,12 +18,9 @@ import { RouterModule } from '@angular/router';
     
     <!-- Fichas quadradas maiores -->
     <div class="ficha-container">
-      <div class="ficha" onclick="this.classList.toggle('selected')">Cachorro quente (2x)</div>
-      <div class="ficha" onclick="this.classList.toggle('selected')">Refrigerante fanta</div>
-      <div class="ficha" onclick="this.classList.toggle('selected')">Pescaria</div>
-      <div class="ficha" onclick="this.classList.toggle('selected')">Maçã do amor</div>
-      <div class="ficha" onclick="this.classList.toggle('selected')">Refrigerante guaraná (3x)</div>
-      <div class="ficha" onclick="this.classList.toggle('selected')">Canjica (2x)</div>
+    @for (ticket of tickets; track ticket.description) { 
+      <div class="ficha" onclick="this.classList.toggle('selected')" (click)="selectTicket(ticket)">{{ ticket.description }} x{{ ticket.quantity}}</div>
+    }
     </div>
     
     <!-- Botões no rodapé -->
@@ -34,27 +36,24 @@ import { RouterModule } from '@angular/router';
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
-            <h4 class="modal-title" id="modalTitle">Quantas fichas deseja consumir?</h4>
+            <h3 class="modal-title" id="modalTitle">Quantas fichas deseja consumir?</h3>
             <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
           </div>
-
           <form>
             <!-- Modal Body -->
             <div class="modal-body">
+            @for (ticketModal of selectedTickets; track ticketModal.description) { 
               <div class="d-flex flex-column mb-3">
-                <label class="form-label">Cachorro quente</label>
-                <input type="number" class="form-control text-center" formControlName="quantidade">
+                <label class="form-label">{{ticketModal.description}}</label>
+                <input type="number" class="form-control text-center" (change)="updateQuantity(ticketModal)" [formControl]="quantity">
               </div>
-              <div class="d-flex flex-column mb-3">
-                <label class="form-label">Refrigerante guaraná</label>  
-                <input type="number" class="form-control text-center" formControlName="quantidade">
-              </div>
+            }
             </div>
 
             <!-- Modal Footer -->
             <div class="modal-footer">
-              <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" routerLink="../receipt">Comprar</button>
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="buyTicket()">Consumir</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
             </div>
           </form>
         </div>
@@ -64,6 +63,69 @@ import { RouterModule } from '@angular/router';
 `,
   styleUrl: './wallet.component.scss'
 })
-export class WalletComponent {
+export class WalletComponent implements OnInit{
 
+  tickets: Tickets[] = [];
+  userData: any;
+  selectedTickets: Tickets[] = [];
+  index: number | undefined;
+  userTicket: Checkout = {
+    customer: null,
+    tickets : []
+  };
+
+  quantity = new FormControl(0);
+  
+  constructor(
+    private walletService: WalletService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    // Recupera os dados do usuário
+    this.userData = history.state.userData;
+    this.getAlltickets();
+  }
+
+  selectTicket(ticket: Tickets): void {
+    const ticketCopy: Tickets = { ...ticket }; 
+    
+    if (this.selectedTickets.some(t => t.id === ticketCopy.id)) {
+
+      this.selectedTickets = this.selectedTickets.filter(item => item.id !== ticketCopy.id);
+    } else {
+
+      this.selectedTickets.push(ticketCopy);
+    }
+  }
+
+  updateQuantity(ticket: Tickets): void {
+    this.index = this.selectedTickets.findIndex(t => t.id === ticket.id);
+  
+    if (this.index !== -1 && this.quantity.value !== null) {
+      this.selectedTickets[this.index].quantity = this.quantity.value;
+      console.log("Quantidade atualizada com sucesso!", this.selectedTickets[this.index]);
+    }
+  }
+
+  buyTicket(){
+    this.userTicket.customer        = this.userData; 
+    this.userTicket.tickets         = this.selectedTickets;
+    this.walletService.consumeTicket(this.userTicket).subscribe({
+      next: () => {
+        console.log("Compra feita com suceso!")  
+      },
+      error: (err: any) => console.log(err),
+    });
+    this.router.navigate(["/receipt"], { state: { userTickets: this.selectedTickets, userData: this.userData } });
+  }
+
+  getAlltickets(): void {
+    this.walletService.getAll(this.userData.cpf).subscribe((response: Tickets[]) => {
+      if (response) {
+        this.tickets = response.map(ticket => ({ ...ticket }));
+      }
+    });
+  }
+ 
 }

@@ -6,11 +6,12 @@ import { RouterModule } from '@angular/router';
 import { FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Checkout } from './checkout';
 import { Register } from '../register/register-interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-store',
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule],
+  imports: [RouterModule, ReactiveFormsModule, CommonModule],
   template: `
     <h2 class="text-center mb-4">Fichas disponíveis:</h2>
     <div class="container">
@@ -22,14 +23,14 @@ import { Register } from '../register/register-interface';
             <div class="card-body d-flex justify-content-between align-items-center">
               <!-- Exibir informações do ticket -->
              <h5 class="card-title mb-0">{{ ticket.description }}</h5>
-            <p class="card-text mb-0">{{ ticket.value }}</p>
+            <p class="card-text mb-0">{{ ticket.value | currency: 'BRL' : 'symbol' : '1.2-2' }}</p>
             </div>
          </div>
         </div>
         }
       </div>
       <div class="mb-3 return">
-        <a  class="form-label" routerLink="../home-page">Voltar para o login</a>
+        <a  class="form-label" routerLink="../home-page">Voltar</a>
       </div>
     </div>
      
