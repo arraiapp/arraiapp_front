@@ -11,7 +11,7 @@ Arraiapp é uma aplicação web focada em mobile de autoatendimento desenvolvida
 
 Esse reposítorio se refere a parte do cliente, onde o mesmo pode adquir fichas via pagamento integrada com o PagSeguro e consumir as fichas via geração de comprovante.
 
-📌 [Link da documentação completa](https://example.com)
+📌 [Link da documentação completa](https://drive.google.com/file/d/1-xPX5pylaB8QlzHiy0QG18vkGUEEYGlQ/view?usp=drive_link)
 
 📌 [Link do frontend da página do administrador](https://github.com/arraiapp/arraiapp_loja)
 
